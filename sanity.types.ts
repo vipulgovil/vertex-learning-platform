@@ -41,41 +41,37 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h2" | "h3" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      caption?: string;
-      _type: "image";
-      _key: string;
-    }
->;
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h2" | "h3" | "blockquote";
+  listItem?: "bullet" | "number";
+  markDefs?: Array<{
+    href: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt: string;
+  caption?: string;
+  _type: "image";
+  _key: string;
+}>;
 
 export type Resource = {
   _type: "resource";
-  type:
-    "article" | "documentation" | "repository" | "video" | "download" | "tool";
+  type: "article" | "documentation" | "repository" | "video" | "download" | "tool";
   title: string;
   description?: string;
   url: string;
@@ -83,17 +79,7 @@ export type Resource = {
 
 export type LearningOutcome = {
   _type: "learningOutcome";
-  icon:
-    | "code"
-    | "rocket"
-    | "shield"
-    | "zap"
-    | "database"
-    | "layers"
-    | "gauge"
-    | "server"
-    | "globe"
-    | "lock";
+  icon: "code" | "rocket" | "shield" | "zap" | "database" | "layers" | "gauge" | "server" | "globe" | "lock";
   title: string;
   description?: string;
 };
@@ -109,11 +95,9 @@ export type Module = {
   _type: "module";
   title: string;
   summary?: string;
-  lessons?: Array<
-    {
-      _key: string;
-    } & LessonReference
-  >;
+  lessons?: Array<{
+    _key: string;
+  } & LessonReference>;
 };
 
 export type Lesson = {
@@ -139,11 +123,9 @@ export type Lesson = {
   keyPoints?: Array<string>;
   notes?: BlockContent;
   proTip?: string;
-  resources?: Array<
-    {
-      _key: string;
-    } & Resource
-  >;
+  resources?: Array<{
+    _key: string;
+  } & Resource>;
 };
 
 export type SanityImageCrop = {
@@ -194,11 +176,9 @@ export type Course = {
   instructor: InstructorReference;
   category: CategoryReference;
   level: "beginner" | "intermediate" | "advanced";
-  modules?: Array<
-    {
-      _key: string;
-    } & Module
-  >;
+  modules?: Array<{
+    _key: string;
+  } & Module>;
   icon?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -217,11 +197,9 @@ export type Course = {
   price?: number;
   popular?: boolean;
   studentCount?: number;
-  learningOutcomes?: Array<
-    {
-      _key: string;
-    } & LearningOutcome
-  >;
+  learningOutcomes?: Array<{
+    _key: string;
+  } & LearningOutcome>;
 };
 
 export type Category = {
@@ -352,33 +330,9 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes =
-  | SimpleBlockContent
-  | SanityImageAssetReference
-  | BlockContent
-  | Resource
-  | LearningOutcome
-  | LessonReference
-  | Module
-  | Lesson
-  | SanityImageCrop
-  | SanityImageHotspot
-  | Slug
-  | InstructorReference
-  | CategoryReference
-  | Course
-  | Category
-  | Instructor
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityFileAsset
-  | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+export type AllSanitySchemaTypes = SimpleBlockContent | SanityImageAssetReference | BlockContent | Resource | LearningOutcome | LessonReference | Module | Lesson | SanityImageCrop | SanityImageHotspot | Slug | InstructorReference | CategoryReference | Course | Category | Instructor | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: COURSES_QUERY
 // Query: *[_type == "course" && defined(slug.current)] | order(popular desc, title asc) {      _id,  title,  "slug": slug.current,  summary,  "iconUrl": icon.asset->url,  level,  price,  popular,  studentCount,  "moduleCount": count(modules),  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds),    "category": category->{ title, "slug": slug.current },    "instructor": instructor->{ name, "slug": slug.current }  }
 export type COURSES_QUERY_RESULT = Array<{
@@ -404,7 +358,7 @@ export type COURSES_QUERY_RESULT = Array<{
   };
 }>;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: COURSE_QUERY
 // Query: *[_type == "course" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  summary,  "iconUrl": icon.asset->url,  level,  price,  popular,  studentCount,  "moduleCount": count(modules),  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds),    coverImage,    learningOutcomes[]{ _key, icon, title, description },    "category": category->{ title, "slug": slug.current, description },    "instructor": instructor->{ name, "slug": slug.current, photo, expertise },    "modules": modules[]{      _key,      title,      summary,      "durationSeconds": math::sum(lessons[]->durationSeconds),      "lessons": lessons[]->{        _id,        title,        "slug": slug.current,        durationSeconds,        freePreview,        poster      }    }  }
 export type COURSE_QUERY_RESULT = {
@@ -430,17 +384,7 @@ export type COURSE_QUERY_RESULT = {
   } | null;
   learningOutcomes: Array<{
     _key: string;
-    icon:
-      | "code"
-      | "database"
-      | "gauge"
-      | "globe"
-      | "layers"
-      | "lock"
-      | "rocket"
-      | "server"
-      | "shield"
-      | "zap";
+    icon: "code" | "database" | "gauge" | "globe" | "layers" | "lock" | "rocket" | "server" | "shield" | "zap";
     title: string;
     description: string | null;
   }> | null;
@@ -485,7 +429,7 @@ export type COURSE_QUERY_RESULT = {
   }> | null;
 } | null;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: LESSON_QUERY
 // Query: *[_type == "course" && slug.current == $courseSlug][0] {    _id,    title,    "slug": slug.current,    "iconUrl": icon.asset->url,    "instructor": instructor->{ name, "slug": slug.current, photo, expertise },    "modules": modules[]{      _key,      title,      "lessons": lessons[]->{        _id,        title,        "slug": slug.current,        durationSeconds,        freePreview      }    },    "lesson": *[      _type == "lesson" &&      slug.current == $lessonSlug &&      _id in ^.modules[].lessons[]._ref    ][0] {      _id,      title,      "slug": slug.current,      videoUrl,      poster,      durationSeconds,      freePreview,      studentCount,      notes,      keyPoints,      proTip,      resources[]{ _key, type, title, description, url }    }  }
 export type LESSON_QUERY_RESULT = {
@@ -538,13 +482,7 @@ export type LESSON_QUERY_RESULT = {
     proTip: string | null;
     resources: Array<{
       _key: string;
-      type:
-        | "article"
-        | "documentation"
-        | "download"
-        | "repository"
-        | "tool"
-        | "video";
+      type: "article" | "documentation" | "download" | "repository" | "tool" | "video";
       title: string;
       description: string | null;
       url: string;
@@ -552,7 +490,7 @@ export type LESSON_QUERY_RESULT = {
   } | null;
 } | null;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: INSTRUCTOR_QUERY
 // Query: *[_type == "instructor" && slug.current == $slug][0] {    _id,    name,    "slug": slug.current,    photo,    expertise,    bio,    "courses": *[      _type == "course" &&      instructor._ref == ^._id &&      defined(slug.current)    ] | order(title asc) {        _id,  title,  "slug": slug.current,  summary,  "iconUrl": icon.asset->url,  level,  price,  popular,  studentCount,  "moduleCount": count(modules),  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)    }  }
 export type INSTRUCTOR_QUERY_RESULT = {
@@ -585,7 +523,7 @@ export type INSTRUCTOR_QUERY_RESULT = {
   }>;
 } | null;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: CATEGORIES_QUERY
 // Query: *[_type == "category" && defined(slug.current)] | order(title asc) {    _id,    title,    "slug": slug.current,    description  }
 export type CATEGORIES_QUERY_RESULT = Array<{
@@ -595,7 +533,7 @@ export type CATEGORIES_QUERY_RESULT = Array<{
   description: string | null;
 }>;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: COURSE_FOR_LESSON_QUERY
 // Query: *[_type == "course" && $lessonId in modules[].lessons[]._ref] {    _id,    title,    "slug": slug.current  }
 export type COURSE_FOR_LESSON_QUERY_RESULT = Array<{
@@ -604,14 +542,14 @@ export type COURSE_FOR_LESSON_QUERY_RESULT = Array<{
   slug: string;
 }>;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: COURSE_SLUGS_QUERY
 // Query: *[_type == "course" && defined(slug.current)]{ "slug": slug.current }
 export type COURSE_SLUGS_QUERY_RESULT = Array<{
   slug: string;
 }>;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: LESSON_PARAMS_QUERY
 // Query: *[_type == "course" && defined(slug.current)]{    "courseSlug": slug.current,    "lessonSlugs": modules[].lessons[]->slug.current  }
 export type LESSON_PARAMS_QUERY_RESULT = Array<{
@@ -619,7 +557,7 @@ export type LESSON_PARAMS_QUERY_RESULT = Array<{
   lessonSlugs: Array<string | null> | null;
 }>;
 
-// Source: sanity/lib/queries.ts
+// Source: ../sanity/lib/queries.ts
 // Variable: INSTRUCTOR_SLUGS_QUERY
 // Query: *[_type == "instructor" && defined(slug.current)]{ "slug": slug.current }
 export type INSTRUCTOR_SLUGS_QUERY_RESULT = Array<{
@@ -630,14 +568,15 @@ export type INSTRUCTOR_SLUGS_QUERY_RESULT = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "course" && defined(slug.current)] | order(popular desc, title asc) {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  "iconUrl": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  "moduleCount": count(modules),\n  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),\n  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)\n,\n    "category": category->{ title, "slug": slug.current },\n    "instructor": instructor->{ name, "slug": slug.current }\n  }\n': COURSES_QUERY_RESULT;
-    '\n  *[_type == "course" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  "iconUrl": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  "moduleCount": count(modules),\n  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),\n  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)\n,\n    coverImage,\n    learningOutcomes[]{ _key, icon, title, description },\n    "category": category->{ title, "slug": slug.current, description },\n    "instructor": instructor->{ name, "slug": slug.current, photo, expertise },\n    "modules": modules[]{\n      _key,\n      title,\n      summary,\n      "durationSeconds": math::sum(lessons[]->durationSeconds),\n      "lessons": lessons[]->{\n        _id,\n        title,\n        "slug": slug.current,\n        durationSeconds,\n        freePreview,\n        poster\n      }\n    }\n  }\n': COURSE_QUERY_RESULT;
-    '\n  *[_type == "course" && slug.current == $courseSlug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    "iconUrl": icon.asset->url,\n    "instructor": instructor->{ name, "slug": slug.current, photo, expertise },\n    "modules": modules[]{\n      _key,\n      title,\n      "lessons": lessons[]->{\n        _id,\n        title,\n        "slug": slug.current,\n        durationSeconds,\n        freePreview\n      }\n    },\n    "lesson": *[\n      _type == "lesson" &&\n      slug.current == $lessonSlug &&\n      _id in ^.modules[].lessons[]._ref\n    ][0] {\n      _id,\n      title,\n      "slug": slug.current,\n      videoUrl,\n      poster,\n      durationSeconds,\n      freePreview,\n      studentCount,\n      notes,\n      keyPoints,\n      proTip,\n      resources[]{ _key, type, title, description, url }\n    }\n  }\n': LESSON_QUERY_RESULT;
-    '\n  *[_type == "instructor" && slug.current == $slug][0] {\n    _id,\n    name,\n    "slug": slug.current,\n    photo,\n    expertise,\n    bio,\n    "courses": *[\n      _type == "course" &&\n      instructor._ref == ^._id &&\n      defined(slug.current)\n    ] | order(title asc) {\n      \n  _id,\n  title,\n  "slug": slug.current,\n  summary,\n  "iconUrl": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  "moduleCount": count(modules),\n  "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),\n  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)\n\n    }\n  }\n': INSTRUCTOR_QUERY_RESULT;
-    '\n  *[_type == "category" && defined(slug.current)] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    description\n  }\n': CATEGORIES_QUERY_RESULT;
-    '\n  *[_type == "course" && $lessonId in modules[].lessons[]._ref] {\n    _id,\n    title,\n    "slug": slug.current\n  }\n': COURSE_FOR_LESSON_QUERY_RESULT;
-    '\n  *[_type == "course" && defined(slug.current)]{ "slug": slug.current }\n': COURSE_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "course" && defined(slug.current)]{\n    "courseSlug": slug.current,\n    "lessonSlugs": modules[].lessons[]->slug.current\n  }\n': LESSON_PARAMS_QUERY_RESULT;
-    '\n  *[_type == "instructor" && defined(slug.current)]{ "slug": slug.current }\n': INSTRUCTOR_SLUGS_QUERY_RESULT;
+    "\n  *[_type == \"course\" && defined(slug.current)] | order(popular desc, title asc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  summary,\n  \"iconUrl\": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  \"moduleCount\": count(modules),\n  \"lessonCount\": count(*[_type == \"lesson\" && _id in ^.modules[].lessons[]._ref]),\n  \"durationSeconds\": math::sum(modules[].lessons[]->durationSeconds)\n,\n    \"category\": category->{ title, \"slug\": slug.current },\n    \"instructor\": instructor->{ name, \"slug\": slug.current }\n  }\n": COURSES_QUERY_RESULT;
+    "\n  *[_type == \"course\" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  summary,\n  \"iconUrl\": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  \"moduleCount\": count(modules),\n  \"lessonCount\": count(*[_type == \"lesson\" && _id in ^.modules[].lessons[]._ref]),\n  \"durationSeconds\": math::sum(modules[].lessons[]->durationSeconds)\n,\n    coverImage,\n    learningOutcomes[]{ _key, icon, title, description },\n    \"category\": category->{ title, \"slug\": slug.current, description },\n    \"instructor\": instructor->{ name, \"slug\": slug.current, photo, expertise },\n    \"modules\": modules[]{\n      _key,\n      title,\n      summary,\n      \"durationSeconds\": math::sum(lessons[]->durationSeconds),\n      \"lessons\": lessons[]->{\n        _id,\n        title,\n        \"slug\": slug.current,\n        durationSeconds,\n        freePreview,\n        poster\n      }\n    }\n  }\n": COURSE_QUERY_RESULT;
+    "\n  *[_type == \"course\" && slug.current == $courseSlug][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    \"iconUrl\": icon.asset->url,\n    \"instructor\": instructor->{ name, \"slug\": slug.current, photo, expertise },\n    \"modules\": modules[]{\n      _key,\n      title,\n      \"lessons\": lessons[]->{\n        _id,\n        title,\n        \"slug\": slug.current,\n        durationSeconds,\n        freePreview\n      }\n    },\n    \"lesson\": *[\n      _type == \"lesson\" &&\n      slug.current == $lessonSlug &&\n      _id in ^.modules[].lessons[]._ref\n    ][0] {\n      _id,\n      title,\n      \"slug\": slug.current,\n      videoUrl,\n      poster,\n      durationSeconds,\n      freePreview,\n      studentCount,\n      notes,\n      keyPoints,\n      proTip,\n      resources[]{ _key, type, title, description, url }\n    }\n  }\n": LESSON_QUERY_RESULT;
+    "\n  *[_type == \"instructor\" && slug.current == $slug][0] {\n    _id,\n    name,\n    \"slug\": slug.current,\n    photo,\n    expertise,\n    bio,\n    \"courses\": *[\n      _type == \"course\" &&\n      instructor._ref == ^._id &&\n      defined(slug.current)\n    ] | order(title asc) {\n      \n  _id,\n  title,\n  \"slug\": slug.current,\n  summary,\n  \"iconUrl\": icon.asset->url,\n  level,\n  price,\n  popular,\n  studentCount,\n  \"moduleCount\": count(modules),\n  \"lessonCount\": count(*[_type == \"lesson\" && _id in ^.modules[].lessons[]._ref]),\n  \"durationSeconds\": math::sum(modules[].lessons[]->durationSeconds)\n\n    }\n  }\n": INSTRUCTOR_QUERY_RESULT;
+    "\n  *[_type == \"category\" && defined(slug.current)] | order(title asc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    description\n  }\n": CATEGORIES_QUERY_RESULT;
+    "\n  *[_type == \"course\" && $lessonId in modules[].lessons[]._ref] {\n    _id,\n    title,\n    \"slug\": slug.current\n  }\n": COURSE_FOR_LESSON_QUERY_RESULT;
+    "\n  *[_type == \"course\" && defined(slug.current)]{ \"slug\": slug.current }\n": COURSE_SLUGS_QUERY_RESULT;
+    "\n  *[_type == \"course\" && defined(slug.current)]{\n    \"courseSlug\": slug.current,\n    \"lessonSlugs\": modules[].lessons[]->slug.current\n  }\n": LESSON_PARAMS_QUERY_RESULT;
+    "\n  *[_type == \"instructor\" && defined(slug.current)]{ \"slug\": slug.current }\n": INSTRUCTOR_SLUGS_QUERY_RESULT;
   }
 }
+

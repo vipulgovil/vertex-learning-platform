@@ -68,7 +68,10 @@ For `next-sanity`, Portable Text, Tailwind, Clerk, PostHog, and the AI SDK, foll
 
 # 5. How the app is structured
 
-The Sanity Studio is embedded in the Next.js app at `/studio` (`app/studio/[[...tool]]`, root `sanity.config.ts`, schema in `sanity/schemaTypes/`). This is a deliberate choice for this learning project, made by the user to follow their course; do not move it to a standalone workspace. (For production apps, a standalone Studio is preferred: it keeps independent deploys, Studio auto updates, and TypeGen watch mode.)
+The project is two standalone apps in one repo. Do not embed the Studio inside Next.js. Keeping them separate is what preserves independent deploys, Studio auto updates, and TypeGen.
+
+- The Studio is its own app in `studio/` (`sanity.config.ts`, `sanity.cli.ts`, schema in `studio/schemaTypes/`), run with `npm run dev` in `studio/` on port 3333. Its `sanity.cli.ts` owns TypeGen, which reads queries from the web app and writes `sanity.types.ts` at the repo root.
+- The web app is the Next.js app at the repo root. It has no Studio route.
 
 - The Studio holds the Sanity schema and content authoring, nothing else.
 - A web workspace holds the Next.js pages, the search UI, and all server side integration.

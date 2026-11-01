@@ -1,7 +1,7 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {PlayIcon} from '@sanity/icons/Play'
 
-import {formatClock} from '../../lib/format'
+import {formatClock} from '../lib/format'
 
 // Playback is a provider embed (AGENTS.md section 7), so only these hosts.
 const VIDEO_HOSTS = [
