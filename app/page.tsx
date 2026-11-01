@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Bell, Star, User } from "lucide-react";
+import { ArrowRight, Bell, Star } from "lucide-react";
 import { BottomBars } from "@/components/home/bottom-bars";
 import { SearchBox } from "@/components/home/search-box";
+import { AccountMenu } from "@/components/ui/account-menu";
 import { FeaturedCourseCard } from "@/components/ui/card";
 import { Navbar } from "@/components/ui/navbar";
 import { homeCourses } from "@/lib/home-courses";
@@ -32,13 +33,7 @@ export default function Home() {
                 >
                   <Bell aria-hidden className="size-6" strokeWidth={1.75} />
                 </button>
-                <button
-                  type="button"
-                  aria-label="Account"
-                  className={`flex size-13 items-center justify-center rounded-full border-2 border-white bg-neutral-200 text-neutral-500 shadow-sm ${focusRing}`}
-                >
-                  <User aria-hidden className="size-6" />
-                </button>
+                <AccountMenu />
               </>
             }
           />
