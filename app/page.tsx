@@ -1,69 +1,135 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Bell, Star, User } from "lucide-react";
+import { BottomBars } from "@/components/home/bottom-bars";
+import { SearchBox } from "@/components/home/search-box";
+import { FeaturedCourseCard } from "@/components/ui/card";
+import { Navbar } from "@/components/ui/navbar";
+import { homeCourses } from "@/lib/home-courses";
+
+const navItems = [
+  { label: "Courses", href: "/courses" },
+  { label: "My Learning", href: "/my-learning" },
+];
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Hello Vipul {" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="flex flex-1 justify-center bg-cream sm:bg-[repeating-linear-gradient(135deg,var(--color-hatch)_0_1px,transparent_1px_8px)] sm:px-7.5">
+      <div className="flex w-full max-w-360 flex-col bg-cream sm:border-x sm:border-neutral-200/70">
+        <header className="border-b border-neutral-200/70 px-4 py-5 sm:pl-10 sm:pr-8 xl:px-16">
+          <Navbar
+            size="lg"
+            items={navItems}
+            actions={
+              <>
+                <button
+                  type="button"
+                  aria-label="Notifications"
+                  className={`rounded-sm text-neutral-700 transition-colors hover:text-primary-500 ${focusRing}`}
+                >
+                  <Bell aria-hidden className="size-6" strokeWidth={1.75} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Account"
+                  className={`flex size-13 items-center justify-center rounded-full border-2 border-white bg-neutral-200 text-neutral-500 shadow-sm ${focusRing}`}
+                >
+                  <User aria-hidden className="size-6" />
+                </button>
+              </>
+            }
+          />
+        </header>
+
+        <section className="flex flex-col items-center border-b border-neutral-200/70 px-4 pt-17 pb-13.5 text-center sm:px-8">
+          <p className="rounded-sm border border-primary-200 bg-primary-100/60 px-3.5 py-2.5 text-[11px] font-semibold uppercase leading-4 tracking-[0.2em] text-primary-600">
+            Intelligent Learning
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <h1 className="mt-8 font-display text-[34px] font-medium leading-11 tracking-tight text-neutral-900 sm:text-[52px] sm:leading-16 lg:text-[60px] lg:leading-18">
+            Search your learning
+            <br />
+            in plain English.
+          </h1>
+          <p className="mt-7 max-w-117 text-body-lg text-neutral-700 sm:text-[19px] sm:leading-8.5">
+            Vertex understands what you want to learn and finds the exact
+            lessons across all your courses.
+          </p>
+          <Link
+            href="/courses"
+            className={`mt-10 inline-flex h-15 items-center gap-5 rounded-sm bg-primary-500 px-6 text-[18px] text-white shadow-[0_8px_20px_-6px_rgba(249,115,22,0.55)] transition-colors hover:bg-primary-600 ${focusRing}`}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Explore Courses
+            <ArrowRight aria-hidden className="size-5.5" strokeWidth={1.75} />
+          </Link>
+          <div className="mt-11 w-full max-w-186.5">
+            <SearchBox />
+          </div>
+        </section>
+
+        <section
+          aria-labelledby="all-courses"
+          className="px-4 pt-14 sm:px-13 xl:px-18"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <h2
+              id="all-courses"
+              className="font-display text-[28px] leading-9 text-neutral-900"
+            >
+              All Courses
+            </h2>
+            <Link
+              href="/courses"
+              className={`inline-flex items-center gap-2.5 rounded-xs text-[15px] text-primary-500 transition-colors hover:text-primary-600 ${focusRing}`}
+            >
+              View all courses
+              <ArrowRight aria-hidden className="size-4.5" strokeWidth={1.75} />
+            </Link>
+          </div>
+          <ul className="mt-6.5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {homeCourses.map((course) => (
+              <li key={course.slug} className="flex">
+                <FeaturedCourseCard
+                  href={`/courses/${course.slug}`}
+                  title={course.title}
+                  description={course.summary}
+                  icon={
+                    <Image
+                      src={course.icon}
+                      alt=""
+                      width={72}
+                      height={72}
+                      unoptimized
+                    />
+                  }
+                  level={course.level}
+                  duration={course.duration}
+                  modules={course.moduleCount}
+                />
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-17 flex items-center gap-8 sm:gap-10">
+            <span className="h-px flex-1 bg-neutral-200" />
+            <p className="flex items-center gap-3 text-center text-body-lg text-neutral-700 sm:text-[17px]">
+              <Star
+                aria-hidden
+                className="size-5.5 shrink-0 text-primary-500"
+                strokeWidth={1.5}
+              />
+              New courses and lessons added every week.
+            </p>
+            <span className="h-px flex-1 bg-neutral-200" />
+          </div>
+        </section>
+
+        <div className="mt-10 sm:mt-auto sm:pt-10">
+          <BottomBars />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
