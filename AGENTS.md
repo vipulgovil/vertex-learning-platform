@@ -68,9 +68,9 @@ For `next-sanity`, Portable Text, Tailwind, Clerk, PostHog, and the AI SDK, foll
 
 # 5. How the app is structured
 
-The project is two standalone workspaces in one repo. Build it this way and do not embed the Studio inside Next.js. Keeping them separate is what preserves independent deploys, Studio auto updates, and TypeGen.
+The Sanity Studio is embedded in the Next.js app at `/studio` (`app/studio/[[...tool]]`, root `sanity.config.ts`, schema in `sanity/schemaTypes/`). This is a deliberate choice for this learning project, made by the user to follow their course; do not move it to a standalone workspace. (For production apps, a standalone Studio is preferred: it keeps independent deploys, Studio auto updates, and TypeGen watch mode.)
 
-- A Studio workspace holds the Sanity schema and content authoring, nothing else.
+- The Studio holds the Sanity schema and content authoring, nothing else.
 - A web workspace holds the Next.js pages, the search UI, and all server side integration.
 
 Inside web, keep these responsibilities apart:
@@ -92,7 +92,7 @@ Never cross these boundaries. The browser holds no token, never calls the MCP or
 
 Use Next.js (App Router), Clerk for authentication, PostHog for product analytics, Sanity Studio with `next-sanity`, `@sanity/image-url`, and `@portabletext/react`, Tailwind with typography, the Sanity Context MCP over server side HTTP, the Vercel AI SDK with the OpenAI provider, `react-markdown` only for rendering the search reply, Zod for validating structured output, and TypeScript.
 
-Do not use the `@sanity/context` Studio plugin when it lags the Studio's Sanity major version, `text::semanticSimilarity()` unless embeddings are enabled, an embedded Studio, a public dataset, a client side token, or a separate backend framework. Section 12 explains why.
+Do not use the `@sanity/context` Studio plugin when it lags the Studio's Sanity major version, `text::semanticSimilarity()` unless embeddings are enabled, a public dataset, a client side token, or a separate backend framework. Section 12 explains why.
 
 ---
 
