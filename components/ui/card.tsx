@@ -4,6 +4,7 @@ import {
   ChartNoAxesColumn,
   CirclePlay,
   Clock,
+  File,
   FileText,
   Folder,
   SquareArrowOutUpRight,
@@ -66,6 +67,55 @@ export function CourseCard({
         <Meta icon={<Folder aria-hidden className={metaIcon} />}>
           {modules} modules
         </Meta>
+      </div>
+    </Link>
+  );
+}
+
+/** Large course card used on the home page: icon tile above a serif title. */
+export function FeaturedCourseCard({
+  title,
+  description,
+  icon,
+  level,
+  duration,
+  modules,
+  href,
+}: {
+  title: string;
+  description: string;
+  /** Course mark, e.g. a logo image. */
+  icon: ReactNode;
+  level: string;
+  duration: string;
+  modules: number;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex min-h-93 w-full flex-col rounded-lg border border-neutral-200 bg-white px-6 pt-8 pb-6 shadow-sm transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+    >
+      <span className="flex size-18 items-center">{icon}</span>
+      <h3 className="mt-7 font-display text-[20px] leading-8 text-neutral-900">
+        {title}
+      </h3>
+      <p className="mt-4 text-body leading-6 text-neutral-700">
+        {description}
+      </p>
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-2 whitespace-nowrap border-t border-neutral-200 pt-6 text-[10px] leading-4">
+        <span className="inline-flex items-center gap-1 text-neutral-700">
+          <ChartNoAxesColumn aria-hidden className="size-3.5" />
+          {level}
+        </span>
+        <span className="inline-flex items-center gap-1 text-neutral-700">
+          <Clock aria-hidden className="size-3.5" />
+          {duration}
+        </span>
+        <span className="inline-flex items-center gap-1 text-neutral-700">
+          <File aria-hidden className="size-3.5" />
+          {modules} modules
+        </span>
       </div>
     </Link>
   );
