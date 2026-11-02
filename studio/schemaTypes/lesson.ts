@@ -64,7 +64,7 @@ export const lesson = defineType({
           }),
     }),
     defineField({
-      name: 'poster',
+      name: 'thumbnail',
       description: 'Thumbnail shown on lesson cards and search results.',
       type: 'image',
       group: 'video',
@@ -78,7 +78,7 @@ export const lesson = defineType({
       ],
     }),
     defineField({
-      name: 'durationSeconds',
+      name: 'duration',
       title: 'Duration (seconds)',
       description: 'Length of the video in seconds, e.g. 754 for 12:34.',
       type: 'number',
@@ -133,8 +133,8 @@ export const lesson = defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'poster',
-      duration: 'durationSeconds',
+      media: 'thumbnail',
+      duration: 'duration',
       freePreview: 'freePreview',
     },
     prepare: ({title, media, duration, freePreview}) => ({

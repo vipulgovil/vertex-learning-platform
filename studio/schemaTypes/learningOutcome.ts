@@ -3,16 +3,14 @@ import {CheckmarkCircleIcon} from '@sanity/icons/CheckmarkCircle'
 
 // Lucide icon names; the site maps each to its own icon set.
 export const LEARNING_OUTCOME_ICONS = [
+  'sparkles',
+  'layers',
   'code',
   'rocket',
   'shield',
-  'zap',
-  'database',
-  'layers',
   'gauge',
-  'server',
-  'globe',
-  'lock',
+  'puzzle',
+  'workflow',
 ] as const
 
 export const learningOutcome = defineType({

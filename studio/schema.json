@@ -427,27 +427,23 @@
             "of": [
               {
                 "type": "string",
-                "value": "article"
+                "value": "pdf"
               },
               {
                 "type": "string",
-                "value": "documentation"
+                "value": "link"
               },
               {
                 "type": "string",
-                "value": "repository"
+                "value": "repo"
               },
               {
                 "type": "string",
-                "value": "video"
+                "value": "code"
               },
               {
                 "type": "string",
-                "value": "download"
-              },
-              {
-                "type": "string",
-                "value": "tool"
+                "value": "slides"
               }
             ]
           },
@@ -497,6 +493,14 @@
             "of": [
               {
                 "type": "string",
+                "value": "sparkles"
+              },
+              {
+                "type": "string",
+                "value": "layers"
+              },
+              {
+                "type": "string",
                 "value": "code"
               },
               {
@@ -509,31 +513,15 @@
               },
               {
                 "type": "string",
-                "value": "zap"
-              },
-              {
-                "type": "string",
-                "value": "database"
-              },
-              {
-                "type": "string",
-                "value": "layers"
-              },
-              {
-                "type": "string",
                 "value": "gauge"
               },
               {
                 "type": "string",
-                "value": "server"
+                "value": "puzzle"
               },
               {
                 "type": "string",
-                "value": "globe"
-              },
-              {
-                "type": "string",
-                "value": "lock"
+                "value": "workflow"
               }
             ]
           },
@@ -695,7 +683,7 @@
         },
         "optional": false
       },
-      "poster": {
+      "thumbnail": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -749,7 +737,7 @@
         },
         "optional": true
       },
-      "durationSeconds": {
+      "duration": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
