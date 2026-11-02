@@ -32,9 +32,9 @@ Load the course's sample catalog (6 categories, 5 instructors, 10 courses, 40 mo
 5. **Keep** the rest of our schema as is, including the optional course `icon` field (his data doesn't set it; search cards can fall back later) and the duplicate-lesson check.
 6. **Web queries** (`sanity/lib/queries.ts`): read `duration` and `thumbnail`. Derived totals are renamed from `durationSeconds` to `duration` so the names line up. Then regenerate `sanity.types.ts`. `data.ts` needs no logic change.
 7. **Import** with the Sanity CLI: `npx sanity dataset import scripts/seed/seed.ndjson --dataset production --replace`, run from `studio/`. It authenticates with your CLI login, so no write token. No package scripts added.
-8. **Verify counts** afterwards against the file: 6 categories, 5 instructors, 10 courses, 120 lessons (141 documents), via `sanity documents query`.
+8. **Verify counts** afterwards against the file: 6 categories, 5 instructors, 10 courses, 120 lessons (141 documents), via `sanity documents query --dataset production`.
 9. **No dry run exists** for Sanity's import. The dataset is empty, the build self-checks, and `--replace` makes it re-runnable, so I import directly and then validate. Rollback if needed: delete the seeded ids (all prefixed `category.`, `instructor.`, `course.`, `lesson.`).
-10. **Deploy the updated schema** (`sanity schemas deploy`).
+10. **Deploy the updated schema** (`sanity schemas deploy`). It has no `--dataset` flag and deploys to the Studio workspace's dataset, so first confirm `SANITY_STUDIO_DATASET=production` in `studio/.env`.
 
 ## Files expected to touch
 
@@ -43,7 +43,7 @@ Load the course's sample catalog (6 categories, 5 instructors, 10 courses, 40 mo
 
 ## Requirements
 
-- Every imported document passes `sanity documents validate` with no errors.
+- Every imported document passes `sanity documents validate --dataset production` with no errors.
 - Catalog query returns 10 courses with non-zero durations and lesson counts of 12 each.
 
 ## Security considerations
@@ -59,7 +59,7 @@ Load the course's sample catalog (6 categories, 5 instructors, 10 courses, 40 mo
 
 ## Checks
 
-- `studio/`: checksum the two files against the downloads, `npx sanity schemas validate`, `npm run typegen`, `npx tsc --noEmit`, the CLI import, document counts per type, `npx sanity documents validate`, `npx sanity schemas deploy`.
+- `studio/`: checksum the two files against the downloads, `npx sanity schemas validate`, `npm run typegen`, `npx tsc --noEmit`, the CLI import, document counts per type (`--dataset production`), `npx sanity documents validate --dataset production`, `npx sanity schemas deploy` (after confirming `SANITY_STUDIO_DATASET=production`).
 - Root: `npx tsc --noEmit`, `npm run lint`, `npm run build`.
 - Live queries: run `COURSES_QUERY`, `COURSE_QUERY`, `LESSON_QUERY`, `INSTRUCTOR_QUERY` against the dataset and check counts and fields.
 
