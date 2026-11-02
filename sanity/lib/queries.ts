@@ -13,7 +13,7 @@ const courseCardFields = /* groq */ `
   studentCount,
   "moduleCount": count(modules),
   "lessonCount": count(*[_type == "lesson" && _id in ^.modules[].lessons[]._ref]),
-  "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)
+  "duration": math::sum(modules[].lessons[]->duration)
 `
 
 export const COURSES_QUERY = defineQuery(`
@@ -35,14 +35,14 @@ export const COURSE_QUERY = defineQuery(`
       _key,
       title,
       summary,
-      "durationSeconds": math::sum(lessons[]->durationSeconds),
+      "duration": math::sum(lessons[]->duration),
       "lessons": lessons[]->{
         _id,
         title,
         "slug": slug.current,
-        durationSeconds,
+        duration,
         freePreview,
-        poster
+        thumbnail
       }
     }
   }
@@ -64,7 +64,7 @@ export const LESSON_QUERY = defineQuery(`
         _id,
         title,
         "slug": slug.current,
-        durationSeconds,
+        duration,
         freePreview
       }
     },
@@ -77,8 +77,8 @@ export const LESSON_QUERY = defineQuery(`
       title,
       "slug": slug.current,
       videoUrl,
-      poster,
-      durationSeconds,
+      thumbnail,
+      duration,
       freePreview,
       studentCount,
       notes,

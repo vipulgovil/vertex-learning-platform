@@ -11,17 +11,16 @@ export const resource = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Article', value: 'article'},
-          {title: 'Documentation', value: 'documentation'},
-          {title: 'Repository', value: 'repository'},
-          {title: 'Video', value: 'video'},
-          {title: 'Download', value: 'download'},
-          {title: 'Tool', value: 'tool'},
+          {title: 'PDF', value: 'pdf'},
+          {title: 'Link', value: 'link'},
+          {title: 'Repository', value: 'repo'},
+          {title: 'Code sample', value: 'code'},
+          {title: 'Slides', value: 'slides'},
         ],
         layout: 'radio',
         direction: 'horizontal',
       },
-      initialValue: 'article',
+      initialValue: 'link',
       validation: (rule) => rule.required(),
     }),
     defineField({
