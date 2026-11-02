@@ -65,6 +65,17 @@ export const course = defineType({
       type: 'array',
       group: 'content',
       of: [defineArrayMember({type: 'module'})],
+      // Lesson numbers and previous/next come from position, so a lesson
+      // can only appear once across all of a course's modules.
+      validation: (rule) =>
+        rule.custom((modules?: Array<{lessons?: Array<{_ref?: string}>}>) => {
+          const refs = (modules ?? []).flatMap((m) =>
+            (m.lessons ?? []).map((l) => l._ref),
+          )
+          return new Set(refs).size === refs.length
+            ? true
+            : 'A lesson can only appear once in a course.'
+        }),
     }),
     defineField({
       name: 'icon',

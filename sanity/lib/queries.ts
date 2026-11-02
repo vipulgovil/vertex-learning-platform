@@ -17,7 +17,7 @@ const courseCardFields = /* groq */ `
 `
 
 export const COURSES_QUERY = defineQuery(`
-  *[_type == "course" && defined(slug.current)] | order(popular desc, title asc) {
+  *[_type == "course" && defined(slug.current)] | order(coalesce(popular, false) desc, title asc) {
     ${courseCardFields},
     "category": category->{ title, "slug": slug.current },
     "instructor": instructor->{ name, "slug": slug.current }
@@ -118,7 +118,11 @@ export const CATEGORIES_QUERY = defineQuery(`
 
 // Reverse reference: lessons don't store their course.
 export const COURSE_FOR_LESSON_QUERY = defineQuery(`
-  *[_type == "course" && $lessonId in modules[].lessons[]._ref] {
+  *[
+    _type == "course" &&
+    defined(slug.current) &&
+    $lessonId in modules[].lessons[]._ref
+  ] {
     _id,
     title,
     "slug": slug.current
